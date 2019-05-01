@@ -13,7 +13,7 @@ const MovieSchema = new Schema({
     year: Number,
     imdb_score: Number,
     date: {
-        type: date,
+        type: Date,
         default: Date.now()
     }
 
