@@ -7,7 +7,7 @@ const router = express.Router();
 const Director = require('../models/Director');
 
 
-
+//   ADD DIRECTOR
 router.post('/', (req,res,next)=>{
   const director = new Director(req.body);
   const promise = director.save();
@@ -18,6 +18,8 @@ router.post('/', (req,res,next)=>{
     res.json(err);
   })
 });
+
+//  GET DIRECTORS WITH FILMS
 
 router.get('/' , (req,res)=>{
   const  promise = Director.aggregate([
@@ -66,6 +68,7 @@ router.get('/' , (req,res)=>{
   })
 });
 
+//     GET DIRECTORS WITH DETAILS
 
 router.get('/:director_id' , (req,res)=>{
   const  promise = Director.aggregate([
@@ -118,5 +121,46 @@ router.get('/:director_id' , (req,res)=>{
     res.json(err);
   })
 });
+
+
+//    UPDATE DIRECTOR
+
+router.put('/:director_id', (req,res,next)=>{
+
+  const promise = Director.findByIdAndUpdate(
+      req.params.director_id,
+      req.body,
+      {
+        new: true
+      }
+  );
+
+  promise.then((director)=>{
+    if(!director)
+      next({message: 'The director was not found.', code: 999});
+    res.json(director);
+  }).catch((err)=>{
+    res.json(err);
+  });
+
+});
+
+//  DELETE DIRECTOR
+
+router.delete('/:director_id', (req,res,next)=>{
+
+  const promise = Director.findByIdAndRemove(req.params.director_id);
+
+  promise.then((director)=>{
+    if(!director)
+      next({message: 'The director was not found.', code: 998});
+    res.json(director);
+  }).catch((err)=>{
+    res.json(err);
+  });
+
+});
+
+
 
 module.exports = router;
