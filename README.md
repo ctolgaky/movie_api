@@ -1,3 +1,5 @@
+[![Build status](https://api.travis-ci.org/ctolgaky/movie_api.svg)](https://travis-ci.org/ctolgaky/movie_api)
+
 # movie_api
 Node.js Movie API
 # Movies
